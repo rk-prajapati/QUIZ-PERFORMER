@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Register Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="auth-wrap">
+    <div class="card auth-card">
+      <h1><i class="fa-solid fa-user-plus"></i> Create Account</h1>
+      <p class="sub">Join and start attempting quizzes</p>
+      <form onsubmit="handleRegister(event)">
+        <div class="form-group"><label>Full Name</label><input class="form-control" id="name" required></div>
+        <div class="form-group"><label>Email</label><input class="form-control" id="email" type="email" required></div>
+        <div class="form-group"><label>Password (8+ characters)</label><div class="password-wrap"><input class="form-control" id="password" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" onclick="togglePassword('password', this)" aria-label="Show password"><i class="fa-solid fa-eye"></i></button></div><small class="form-help">Use uppercase, lowercase, number and special character.</small></div>
+        <div class="form-group"><label>Confirm Password</label><div class="password-wrap"><input class="form-control" id="confirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" onclick="togglePassword('confirm', this)" aria-label="Show password"><i class="fa-solid fa-eye"></i></button></div></div>
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+      </form>
+      <div class="auth-switch">Already registered? <a href="login.html">Login & Play Again</a></div>
+    </div>
+  </div>
+  <script src="storage.js"></script>
+  <script src="validation.js"></script>
+  <script src="ui.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

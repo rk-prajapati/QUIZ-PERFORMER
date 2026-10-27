@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leaderboard Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <h2><i class="fa-solid fa-trophy" style="color:var(--accent)"></i> Leaderboard</h2>
+        <p style="opacity:.85">Top performers across all quizzes</p>
+      </div>
+    </div>
+    <div id="lbTable"></div>
+  </div>
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script>
+    (function renderLB() {
+      const session = Session.requireRole('student');
+      if (!session) return;
+      const results = ResultsDB.all();
+      const map = {};
+      results.forEach(r => {
+        if (!map[r.studentId]) map[r.studentId] = { name: r.studentName, attempts: 0, total: 0, best: 0 };
+        map[r.studentId].attempts++;
+        map[r.studentId].total += r.percentage;
+        map[r.studentId].best = Math.max(map[r.studentId].best, r.percentage);
+      });
+      const rows = Object.entries(map).map(([id, s]) => ({
+        id, name: s.name, attempts: s.attempts, avg: Math.round(s.total / s.attempts), best: s.best
+      })).sort((a, b) => b.avg - a.avg || b.best - a.best);
+      const el = document.getElementById('lbTable');
+      if (!rows.length) { el.innerHTML = '<div class="card text-center">No attempts yet. Be the first!</div>'; return; }
+      const medals = ['🥇','🥈','🥉'];
+      el.innerHTML = `<div class="card table-wrap"><table class="table"><thead>
+        <tr><th>Rank</th><th>Student</th><th>Avg %</th><th>Best %</th><th>Attempts</th></tr></thead>
+        <tbody>${rows.map((r, i) => `
+          <tr ${r.id === session.id ? 'style="background:rgba(255,209,102,0.15);"' : ''}>
+            <td style="font-size:1.1rem;font-weight:700;">${medals[i] || '#' + (i + 1)}</td>
+            <td>${r.name}${r.id === session.id ? ' <span class="badge">You</span>' : ''}</td>
+            <td>${r.avg}%</td>
+            <td>${r.best}%</td>
+            <td>${r.attempts}</td>
+          </tr>`).join('')}
+        </tbody></table></div>`;
+    })();
+  </script>
+</body>
+</html>

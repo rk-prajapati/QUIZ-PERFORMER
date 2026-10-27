@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Result – Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>@media print { .navbar, .no-print { display: none !important; } body { background: white !important; color: black !important; } .card { background: white !important; color: black !important; border: 1px solid #ccc !important; backdrop-filter: none !important; } }</style>
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div style="opacity:.8;font-size:.85rem;">RESULT</div>
+        <h2 id="quizTitle"></h2>
+      </div>
+      <div class="flex no-print">
+        <button class="btn" onclick="printResult()"><i class="fa-solid fa-print"></i> Print</button>
+        <button class="btn btn-primary" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+        <button class="btn btn-success" onclick="downloadCertificate()"><i class="fa-solid fa-certificate"></i> Certificate</button>
+      </div>
+    </div>
+
+    <div class="grid grid-4 mb-2">
+      <div class="card stat"><i class="fa-solid fa-star"></i><span class="value" id="scoreValue">0/0</span><span class="label">Score</span></div>
+      <div class="card stat"><i class="fa-solid fa-percentage"></i><span class="value" id="percentValue">0%</span><span class="label">Percentage</span></div>
+      <div class="card stat"><i class="fa-solid fa-check"></i><span class="value" id="correctValue">0</span><span class="label">Correct</span></div>
+      <div class="card stat"><i class="fa-solid fa-xmark"></i><span class="value" id="wrongValue">0</span><span class="label">Wrong</span></div>
+    </div>
+
+    <div class="card mb-2 text-center">
+      Status: <span id="statusBadge" class="badge">-</span>
+    </div>
+
+    <h3 class="mb-2 mt-4">Answer Review</h3>
+    <div id="review"></div>
+
+    <div class="text-center mt-4 no-print">
+      <a href="dashboard.html" class="btn"><i class="fa-solid fa-house"></i> Back to Dashboard</a>
+    </div>
+  </div>
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script src="result.js"></script>
+  <script>initResult();</script>
+  
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quiz – Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="container">
+    <div class="quiz-header">
+      <div>
+        <div style="opacity:.8;font-size:.85rem;">QUIZ IN PROGRESS</div>
+        <h2 id="quizTitle"></h2>
+      </div>
+      <div class="timer" id="timer"><i class="fa-solid fa-clock"></i> <span>--:--</span></div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="q-nav" id="qNav"></div>
+
+    <div class="card question-card">
+      <div class="question-num" id="qNum"></div>
+      <div class="question-text" id="qText"></div>
+      <div class="options" id="options"></div>
+      <div class="quiz-actions">
+        <button id="prevBtn" class="btn" onclick="prev()"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+        <div class="flex">
+          <button id="nextBtn" class="btn btn-primary" onclick="next()">Next <i class="fa-solid fa-arrow-right"></i></button>
+          <button id="submitBtn" class="btn btn-success hidden" onclick="submit()"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script src="timer.js"></script>
+  <script src="quiz.js"></script>
+  <script>initQuiz();</script>
+</body>
+</html>

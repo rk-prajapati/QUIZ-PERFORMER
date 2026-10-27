@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin – Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    .tab-btn { padding: 10px 18px; }
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px;
+    }
+    .modal { max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="container">
+    <div id="adminGate" class="card auth-card text-center">
+      <div class="spinner"></div>
+      <h2>Checking administrator access…</h2>
+      <p class="mt-2">Verifying your secure session and database role.</p>
+    </div>
+    <div id="adminContent" class="hidden">
+    <div class="section-header">
+      <div>
+        <h2>Admin Panel</h2>
+        <p style="opacity:.85">Manage quizzes, students, and analytics</p>
+      </div>
+      <button class="btn btn-primary" onclick="openQuizEditor()"><i class="fa-solid fa-plus"></i> New Quiz</button>
+    </div>
+
+    <div class="grid grid-4 mb-2">
+      <div class="card stat"><i class="fa-solid fa-file-lines"></i><span class="value" id="statQuizzes">0</span><span class="label">Quizzes</span></div>
+      <div class="card stat"><i class="fa-solid fa-user-graduate"></i><span class="value" id="statStudents">0</span><span class="label">Students</span></div>
+      <div class="card stat"><i class="fa-solid fa-list-check"></i><span class="value" id="statAttempts">0</span><span class="label">Attempts</span></div>
+      <div class="card stat"><i class="fa-solid fa-percentage"></i><span class="value" id="statAvg">0%</span><span class="label">Avg Score</span></div>
+    </div>
+
+    <div class="flex mb-2" style="flex-wrap:wrap;">
+      <button class="btn tab-btn" data-tab="overview" onclick="showTab('overview')"><i class="fa-solid fa-chart-pie"></i> Overview</button>
+      <button class="btn tab-btn" data-tab="quizzes" onclick="showTab('quizzes')"><i class="fa-solid fa-file-lines"></i> Quizzes</button>
+      <button class="btn tab-btn" data-tab="students" onclick="showTab('students')"><i class="fa-solid fa-user-graduate"></i> Students</button>
+      <button class="btn tab-btn" data-tab="results" onclick="showTab('results')"><i class="fa-solid fa-list-check"></i> Results</button>
+    </div>
+
+    <div id="tab-overview" class="tab-panel">
+      <div class="grid grid-2">
+        <div class="card"><h4 class="mb-2">Attempts per Quiz</h4><canvas id="chartAttempts"></canvas></div>
+        <div class="card"><h4 class="mb-2">Pass vs Fail</h4><canvas id="chartPassFail"></canvas></div>
+        <div class="card"><h4 class="mb-2">Quizzes by Category</h4><canvas id="chartCategories"></canvas></div>
+        <div class="card"><h4 class="mb-2">Score Trend</h4><canvas id="chartTrend"></canvas></div>
+      </div>
+    </div>
+
+    <div id="tab-quizzes" class="tab-panel hidden"><div id="quizzesTable"></div></div>
+    <div id="tab-students" class="tab-panel hidden"><div id="studentsTable"></div></div>
+    <div id="tab-results" class="tab-panel hidden">
+      <div class="flex-between mb-2">
+        <h3>All Results</h3>
+        <button class="btn btn-success" onclick="exportResultsCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+      </div>
+      <div id="resultsTable"></div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Quiz editor modal -->
+  <div id="quizModal" class="modal-backdrop hidden">
+    <div class="card modal">
+      <div class="flex-between mb-2">
+        <h3 id="editorTitle">Create Quiz</h3>
+        <button class="btn btn-ghost" onclick="closeQuizEditor()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="grid grid-3">
+        <div class="form-group"><label>Title</label><input class="form-control" id="qTitle"></div>
+        <div class="form-group"><label>Category</label><input class="form-control" id="qCategory" placeholder="e.g. Programming"></div>
+        <div class="form-group"><label>Duration (min)</label><input class="form-control" id="qDuration" type="number" min="1" value="5"></div>
+      </div>
+      <div class="flex-between mb-2">
+        <h4>Questions</h4>
+        <button class="btn btn-primary" onclick="addQuestion()"><i class="fa-solid fa-plus"></i> Add Question</button>
+      </div>
+      <div id="questionsList"></div>
+      <div class="text-center mt-2">
+        <button class="btn btn-success" onclick="saveQuiz()"><i class="fa-solid fa-save"></i> Save Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script src="validation.js"></script>
+  <script src="admin.js"></script>
+  <script>initAdmin();</script>
+  
+</body>
+</html>

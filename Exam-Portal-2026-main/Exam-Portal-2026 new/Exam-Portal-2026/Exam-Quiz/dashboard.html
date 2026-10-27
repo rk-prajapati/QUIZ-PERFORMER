@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Student Dashboard – Exam Portal</title>
+  <link rel="icon" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar" id="navbar"></nav>
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <h2 id="welcome"></h2>
+        <p style="opacity:.85">Ready to test your knowledge?</p>
+      </div>
+    </div>
+
+    <div class="grid grid-4 mb-2">
+      <div class="card stat"><i class="fa-solid fa-book-open-reader"></i><span class="value" id="statAvailable">0</span><span class="label">Available</span></div>
+      <div class="card stat"><i class="fa-solid fa-circle-check"></i><span class="value" id="statCompleted">0</span><span class="label">Completed</span></div>
+      <div class="card stat"><i class="fa-solid fa-list-check"></i><span class="value" id="statAttempts">0</span><span class="label">Attempts</span></div>
+      <div class="card stat"><i class="fa-solid fa-percentage"></i><span class="value" id="statAvg">0%</span><span class="label">Avg Score</span></div>
+    </div>
+
+    <div class="card mb-2">
+      <div class="flex" style="flex-wrap:wrap;">
+        <input id="search" class="form-control" placeholder="Search quizzes…" style="flex:1;min-width:200px;">
+        <select id="category" class="form-control" style="max-width:220px;"></select>
+      </div>
+    </div>
+
+    <h3 class="mb-2">Available Quizzes</h3>
+    <div id="quizList" class="grid grid-2 mb-2"></div>
+
+    <h3 class="mb-2 mt-4">Your Attempt History</h3>
+    <div id="history"></div>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="ui.js"></script>
+  <script src="dashboard.js"></script>
+  <script>initDashboard();</script>
+</body>
+</html>
